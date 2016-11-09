@@ -1,4 +1,5 @@
 import normal_dis_random as ndr
+import re
 
 class Bandit:
   # size: 腕の数
@@ -11,7 +12,7 @@ class Bandit:
     self.reward_exp = []
     random = ndr.NormalDistRandom(reward_exp_avg, reward_exp_var)
 
-    for i in self.size:
+    for i in range(0, self.size):
       print(i)
       reward_exp = random.get_random()
       self.reward_exp.append(reward_exp)
@@ -20,6 +21,23 @@ class Bandit:
   def select(self, i):
     return self.rand_generator[i].get_random()
 
+if __name__ == "__main__":
+  bandit = Bandit()
+  print("input 0 - {last_num}, or q".format(last_num=bandit.size - 1.0))
+  while True:
+    line = input()
+    if re.match(r"[0-9]+", line):
+      print(bandit.select(int(line)))
+    elif "q" == line:
+      print(line)
+      break
+    else:
+      print("input 0 - {last_num}, or q".format(last_num=bandit.size - 1.0))
+  print("expected value")
+  print(bandit.reward_exp)
 
-bandit = Bandit()
-print("input %f" %bandit.size)
+
+
+
+
+
