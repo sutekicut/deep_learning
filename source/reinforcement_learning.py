@@ -1,5 +1,7 @@
-import normal_dis_random as ndr
 import re
+
+from source import normal_dis_random as ndr
+
 
 class Bandit:
   # size: 腕の数

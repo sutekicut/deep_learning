@@ -1,0 +1,45 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # Name.
+  config.vm.box = "bento/centos-6.7"
+  
+  #Host Name
+  config.vm.hostname = "deep-learning"
+
+  #Network.
+  config.vm.network "private_network", ip: "192.168.33.13"
+
+  #VM settings
+  config.vm.provider "virtualbox" do |vb|
+     vb.name = 'DeepLearning'
+
+     # Customize the amount of memory on the VM:
+     vb.memory = "2048"
+     
+     #NAT Settings
+     #vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
+     #vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+  end
+
+  # Omnibus
+  #config.omnibus.chef_version = :latest
+
+  # Chef Settings
+  #config.vm.provision "chef_solo" do |chef|
+  #  chef.cookbooks_path = ["../cookbooks", "../site-cookbooks"]
+  #  
+  #  #yum    
+  #  chef.add_recipe "yum"
+  #  chef.add_recipe "yum-epel"
+  #  chef.add_recipe "yum-remi"
+  #  chef.add_recipe "yum-mysql-community::mysql55"
+  #
+  #  #Vim
+  #  chef.add_recipe "vim"
+  #end
+end
