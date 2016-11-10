@@ -1,51 +1,39 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.image import imread
+import re
 
-print("test")
-
-class Man:
-  def __init__(self, name):
-    self.name = name
-    print("initialized")
-
-  def hello(self):
-    print("Hello " + self.name)
-
-  def goodbye(self):
-    print("Goodbye " + self.name)
+from source.libs import normal_dis_random as ndr
 
 
-m = Man("Koudai")
+class Bandit:
+  # size: 腕の数
+  # reward_exp_avg: 各行動に対する報酬の期待値の平均
+  # reward_exp_var: 各行動に対する報酬の期待値の分散
+  # reward_var: 各行動に対する報酬の分散
+  def __init__(self, size=10, reward_exp_avg=0.0, reward_exp_var=1.0, reward_var=1.0):
+    self.size = size
+    self.rand_generator = []
+    self.reward_exp = []
+    random = ndr.NormalDistRandom(reward_exp_avg, reward_exp_var)
 
-m.hello()
-m.goodbye()
+    for i in range(0, self.size):
+      print(i)
+      reward_exp = random.get_random()
+      self.reward_exp.append(reward_exp)
+      self.rand_generator.append(ndr.NormalDistRandom(reward_exp, reward_var))
 
+  def select(self, i):
+    return self.rand_generator[i].get_random()
 
-
-# 行列計算
-A = np.array([[1, 2], [3, 4]])
-print(A)
-
-B = np.array([[3, 0], [0, 6]])
-print(B)
-
-print(A * B)
-
-
-
-# データの作成
-x = np.arange(0, 6, 0.1)
-y = np.sin(x)
-
-# グラフの描画
-plt.plot(x, y)
-plt.show()
-
-
-# matplotlibの使い方を学ぶ
-#画像の表示
-img = imread("matrix.jpg")
-plt.imshow(img)
-
-plt.show()
+if __name__ == "__main__":
+  bandit = Bandit()
+  print("input 0 - {last_num}, or q".format(last_num=bandit.size - 1.0))
+  while True:
+    line = input()
+    if re.match(r"[0-9]+", line):
+      print(bandit.select(int(line)))
+    elif "q" == line:
+      print(line)
+      break
+    else:
+      print("input 0 - {last_num}, or q".format(last_num=bandit.size - 1.0))
+  print("expected value")
+  print(bandit.reward_exp)
