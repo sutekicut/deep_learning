@@ -12,7 +12,6 @@ class Bandit:
     random = NormalDistRandom(reward_exp_avg, reward_exp_var)
 
     for i in range(0, self.size):
-      print(i)
       reward_exp = random.get_random()
       self.reward_exp.append(reward_exp)
       self.rand_generator.append(NormalDistRandom(reward_exp, reward_var))

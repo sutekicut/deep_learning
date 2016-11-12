@@ -8,18 +8,20 @@ class GreedyMethod:
     self.size = size
     self.epsilon = epsilon
     self.stepsize = stepsize
-    self.times = []
-    self.values = []
+    self.times = [0] * size
+    self.values = [0] * size
 
   # グリーディ法で腕を選ぶ
   # --
+  # @return int i番目の選んだ腕
+
   # epsilonの確率でランダムに選択を行う
   # そうでない場合には、最も確率の高いと推定される行動を選ぶ
   def select(self):
     if Random.random() < self.epsilon:
-      return Random.random(len(self.size))
+      return Random.randint(0, self.size-1)
     else:
-      return max(self.values)
+      return self.values.index(max(self.values))
 
   # 得られた報酬を反映し、学習する
   # --
@@ -27,5 +29,5 @@ class GreedyMethod:
   # value: 得られた報酬
   def reflect(self, selected: int, value: float):
     self.times[selected] += 1
-    stepsize = self.stepsize if self.stepsize == None else (1.0 / self.times[selected])
+    stepsize = self.stepsize if self.stepsize != None else (1.0 / self.times[selected])
     self.values[selected] += stepsize * (value - self.values[selected])
