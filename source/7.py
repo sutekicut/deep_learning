@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 from libs.bandit import Bandit
 from libs.greedy_method import GreedyMethod
+from libs.softmax_mehod import SoftMaxMethod
 
 class TestRunnner:
-  def __init__(self, bandit: Bandit, method: GreedyMethod):
+  def __init__(self, bandit: Bandit, method):
     self.bandit = bandit
     self.method = method
     self.count = 0
@@ -32,10 +33,13 @@ class TestRunnner:
 if __name__ == "__main__":
   size = 10
   bandit = Bandit(size=size)
-  greedy_runner = TestRunnner(bandit, GreedyMethod(size=size))
-  epsilon_greedy = TestRunnner(bandit, GreedyMethod(size=size, epsilon=0.1))
 
-  for runner in [greedy_runner, epsilon_greedy]:
+  test = []
+  test.append(TestRunnner(bandit, GreedyMethod(size=size)))
+  test.append(TestRunnner(bandit, GreedyMethod(size=size, epsilon=0.1)))
+  test.append(TestRunnner(bandit=bandit, method=SoftMaxMethod(size=size, temperature=0.3)))
+
+  for runner in test:
     print("----------------------------------")
     print("time   reward avg.   optimality")
     print("----------------------------------")

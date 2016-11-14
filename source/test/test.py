@@ -10,3 +10,8 @@ if __name__ == "__main__":
 
   c = None
   print(c == None)
+
+
+  weights = [1.0] * 10
+  print(weights)
+  print(sum(weights))
