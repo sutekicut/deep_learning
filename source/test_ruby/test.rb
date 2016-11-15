@@ -5,10 +5,20 @@ class StatusValue
       @value = Array.new((0..20).size) do
         Array.new((0..20).size, 0.0)
         @count = @count + 1
-        # puts @count
+      end
+    end
+
+    def get_most_valuable_move(x, y, *move_list)
+      move_value_hash = move_list.each_with_object(Hash.new) do |move, hash|
+        begin
+
+          hash[move] = move
+        rescue
+          #不正な移動の場合、処理をスキップ
+        end
       end
 
-      puts @value
+      return move_value_hash
     end
 
     def print
@@ -17,7 +27,9 @@ class StatusValue
 end
 
 if __FILE__ == $PROGRAM_NAME
-  # status_value = StatusValue.new
+  status_value = StatusValue.new
   # status_value.print
-  puts (0..10).size
+  hash = status_value.get_most_valuable_move(5, 4, 1)
+  puts hash
+
 end

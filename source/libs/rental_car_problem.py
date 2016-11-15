@@ -110,10 +110,65 @@ class StatusValue():
 
 
   def get_most_valuable_move(self, x, y, *move_list):
-    move_value_hash = move_list.
+    move_value_hash = {}
+    for key, move in list(move_list):
+      move_value_hash[move] = StatusValue.value_of_move(x, y, move)
+
+    return move_value_hash
+
+class Policy:
+  # 方策の初期値は0
+  def __init__(self):
+    env = ENV()
+    self.policy = [0.0 for i in range(0, env.RENTAL_CAR_AMX()) for j in range(0, env.RENTAL_CAR_AMX())]
+
+  def get(self, x, y):
+    return self.policy[x][y]
+
+  def set(self, x, y, move):
+    self.policy[x][y] = move
+
+  def print(self):
+    return ""
 
 
 
+
+
+class PolicyIterationMethod:
+  delta_max = 0.1
+
+  # 方策反復法
+  def __init__(self, value, policy, vervose=False):
+    self.value = value
+    self.policy = policy
+    self.vervose = vervose
+
+  def execute(self):
+    i = 0
+    while True:
+      PolicyIterationMethod.evaluate_policy()
+
+      if self.vervose:
+        self.value.print
+
+      improved = PolicyIterationMethod.improved_policy()
+
+      if self.vervose:
+        self.policy.print
+
+      if improved:
+        i += 1
+      else:
+        break
+
+  def evaluate_policy(self):
+    while True:
+      delta = 0.0
+      break
+
+  def improved_policy(self):
+    
 
 
 
