@@ -120,12 +120,14 @@ class BlackJack:
     else:
       result = 0
 
-    return 0
+    return result
 
   def start_game(self):
     #席に座る
     self.player = Player()
     self.dealer = Dealer()
+    self.finished = False
+    self.result = 0
 
     # スコア12以上になるまでhitする
     while self.player.score < 12:
@@ -139,15 +141,15 @@ class BlackJack:
     # 1枚目は見せる
     self.dealer.open_dealer_card()
 
-    while True:
+    while self.finished == False:
       player_input = input()
 
       if player_input == 'hit':
         self.player.hit(self.draw_card())
-
+        self.player.check_my_cards()
         #21を超えたらburst
         if self.player.score > 21:
-          self.deal()
+          self.finished = True
           break
 
         continue
@@ -171,7 +173,14 @@ class BlackJack:
     self.finish_game()
 
   def finish_game(self):
-    print("player's hands: {player_hands}".format(player_hands=self.player.cards))
-    print("dealer's hands: {dealer_hands}".format(dealer_hands=self.dealer.cards))
-    print("player's hands: {player_hands}".format(player_hands=self.player.cards))
-    print("dealer's hands: {dealer_hands}".format(dealer_hands=self.dealer.cards))
+    print("player's hands: {player_hands}. player's score: {player_score}".format(player_hands=self.player.cards, player_score=self.player.score))
+    print("dealer's hands: {dealer_hands}. dealer's score: {dealer_score}".format(dealer_hands=self.dealer.cards, dealer_score=self.dealer.score))
+
+    result = self.deal()
+
+    if result == 1:
+      print("player win!!!")
+    elif result == 0:
+      print("draw")
+    else:
+      print("player loose…")
