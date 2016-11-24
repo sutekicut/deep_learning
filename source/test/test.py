@@ -1,3 +1,6 @@
+import re
+
+
 class Test:
     def __init__(self):
         self.value = [[0 for i in range(0, 10)] for j in range(0, 10)]
@@ -62,8 +65,29 @@ class Test:
             plaer_cards=', '.join(arr)
         ))
 
+    def print_bar(self):
+        print_bar = "---" + "---------" * len(range(12, 21))
+        print(re.sub(r'-', '[ace]', print_bar, 1))
+
+
+    def print_header(self):
+        print_header = "  %2d(h/s)" * len(range(12, 21)) % tuple(range(12, 21))
+        print(print_header)
+
+    def tuple_print(self):
+        dealer_face_value = (1,)
+        tuple_value = (2, 3, 4, 5)
+        str = " %2d | " * len(range(0, 5))
+        print(str)
+
+        print(dealer_face_value + tuple_value)
+
+        print(" %2d | " * len(range(0, 5)) % dealer_face_value + tuple_value)
+
 
 if __name__ == "__main__":
     test = Test()
-    test.empty_list()
-    test.string_join()
+    test.print_bar()
+
+    test.tuple_print()
+

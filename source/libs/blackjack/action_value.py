@@ -1,5 +1,5 @@
-from libs.blackjack import BlackJack
-
+from .blackjack_correct import BlackJack
+import re
 
 class ActionValue:
     def __init__(self):
@@ -21,8 +21,21 @@ class ActionValue:
         self.count[ace_index][player_total][dealer_face_value][action_index] = count
 
         value = self.value[ace_index][player_total][dealer_face_value][action_index]
-        value += 1
+        value += 1 / count * (reward - value)
         self.value[ace_index][player_total][dealer_face_value][action_index] = value
 
+    print_bar = "---" + "---------" * len(range(12, 21+1))
+    print_header = "  |" + "  %2d(h/s)  " * len(range(12, 21+1)) % tuple(range(12, 21+1))
+    print_format = "%2d|" + "%4.2f / %4.2f" * len(range(12, 21+1)) + "\n"
+
     def print(self):
+        print(re.sub(r'-', '[ace]', ActionValue.print_bar, 1))
+        print(ActionValue.print_header)
+        print(ActionValue.print_bar)
+
+        for dealer_face_value in range(2, 11+1):
+            print(ActionValue.print_format)
+
+
+
         return ""

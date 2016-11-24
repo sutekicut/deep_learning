@@ -1,4 +1,4 @@
-from .blackjack import BlackJack
+from .blackjack_correct import BlackJack
 from .action_value import ActionValue
 from .policy import Policy
 
@@ -17,19 +17,18 @@ class MCESMethod:
         player_total_queue = []
         player_has_ace_queue = []
         player_hit_queue = []
-        # dealer_face_value
+        dealer_face_value = game.dealer_face_value()
 
         # エピソード生成
         while True:
-            player_total = game.player.score
-            player_has_ace = game.player.has_ace
+            player_total = game.player_total
+            player_has_ace = game.player_has_ace()
 
             # 1番最初の行動は、開始点探査の仮定を満たすために、ランダムに選択する
             if not player_hit_queue:
                 player_hit = random.choice([True, False])
             else:
                 player_hit = self.policy.hit()
-
 
             player_total_queue.append(player_total)
             player_has_ace_queue.append(player_has_ace)
