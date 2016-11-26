@@ -1,5 +1,5 @@
 import random as Random
-from libs.blackjack import BlackJack
+from libs.blackjack.blackjack import BlackJack
 
 if __name__ == "__main__":
     game = BlackJack()
